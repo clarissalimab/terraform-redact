@@ -1,0 +1,33 @@
+#!/bin/bash
+
+set -e
+
+INSTALL_DIR="$HOME/bin"
+
+echo ""
+echo "[0m[1mInstalling Redact Terraform helper to $INSTALL_DIR...[0m[0m"
+echo ""
+# Ensure the directory exists
+mkdir -p "$INSTALL_DIR"
+
+# Copy scripts
+cp "$(dirname "$0")/rtf"* "$INSTALL_DIR/"
+
+# Make them executable
+chmod +x "$INSTALL_DIR"/rtf*
+
+# Ensure the directory is in the user's PATH
+if [[ ":$PATH:" != *":$INSTALL_DIR:"* ]]; then
+  echo "export PATH=\"$INSTALL_DIR:\$PATH\"" >> "$HOME/.bashrc"
+  echo "export PATH=\"$INSTALL_DIR:\$PATH\"" >> "$HOME/.zshrc"
+  echo "Added $INSTALL_DIR to PATH (restart your shell to apply changes)."
+fi
+
+echo "[0m[1m[32mInstallation complete![0m[1m[0m[0m"
+echo ""
+echo "You can now replace [33mTerraform[0m commands with [0;32mrtf[0m."
+echo "Examples:"
+echo "  [0;32mrtf[0m init"
+echo "  [0;32mrtf[0m plan"
+echo "  [0;32mrtf[0m apply"
+echo "  [0;32mrtf[0m destroy"
